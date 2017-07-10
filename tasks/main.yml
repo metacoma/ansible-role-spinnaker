@@ -1,0 +1,30 @@
+---
+# tasks file for spinnaker
+- include: spinnaker_user.yml
+
+- name: check hal exists
+  command: which hal  
+  register: hal_exists
+  ignore_errors: true
+
+- include: install_hal.yml
+  when: hal_exists.rc != 0
+
+- name: configure local installation
+  shell: "hal config deploy edit --type localdebian"
+
+- name: setup storage to redis
+  shell: "hal config storage edit --type redis"
+
+- name: "select spinnaker version == {{ spinnaker_version }}"
+  shell: "hal config version edit --version {{ spinnaker_version }}"
+
+# https://www.spinnaker.io/setup/quickstart/halyard-gke-public/
+- name: "override baseurl for ui"
+  shell: "hal config security ui edit  --override-base-url http://{{ spinnaker_public_ip }}:9000"
+
+- name: "override baseurl for api"
+  shell: "hal config security api edit  --override-base-url http://{{ spinnaker_public_ip }}:8084"
+
+- name: "deploy"
+  shell: "hal deploy apply"

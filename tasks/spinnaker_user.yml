@@ -1,0 +1,9 @@
+- name: "check {{ spinnaker_user }} is exists"
+  user: 
+    name: "{{ spinnaker_user }}"
+    comment: "Spinnaker user"
+    group: "admin"
+    state: present
+    createhome: true
+    home: "/home/{{spinnaker_user}}"
+      

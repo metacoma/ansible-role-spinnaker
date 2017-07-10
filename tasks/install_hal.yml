@@ -1,0 +1,16 @@
+- name: download hal installation script
+  get_url:
+    url: "{{ hal_installation_script_url }}"
+    dest: /tmp/InstallHalyard.sh
+    force: yes
+
+
+- name: Check java8 package
+  apt:
+    name: openjdk-8-jdk
+    state: present
+
+- name: Running InstlalHalyard
+  command: "bash /tmp/InstallHalyard.sh -y  --local-install --user {{ spinnaker_user }}"
+
+
