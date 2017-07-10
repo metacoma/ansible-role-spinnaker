@@ -29,7 +29,7 @@
 # https://blog.spinnaker.io/exposing-spinnaker-to-end-users-4808bc936698
 - name: "bind {{ item }}  to 0.0.0.0"
   lineinfile:
-    dest: "~spinnaker/.hal/default/service-settings/{{ item }}.yml"
+    dest: "~{{ spinnaker_user }}/.hal/default/service-settings/{{ item }}.yml"
     state: present
     line: "host: 0.0.0.0"
     regexp: "host: 0.0.0.0"
