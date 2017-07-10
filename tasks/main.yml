@@ -26,5 +26,19 @@
 - name: "override baseurl for api"
   shell: "hal config security api edit  --override-base-url http://{{ spinnaker_public_ip }}:8084"
 
+# https://blog.spinnaker.io/exposing-spinnaker-to-end-users-4808bc936698
+- name: "bind {{ item }}  to 0.0.0.0"
+  lineinfile:
+    dest: "~spinnaker/.hal/default/service-settings/{{ item }}.yml"
+    state: present
+    line: "host: 0.0.0.0"
+    regexp: "host: 0.0.0.0"
+    create: true
+  with_items:
+    - gate
+    - deck
+  become: true
+  become_user: "{{ spinnaker_user }}"
+
 - name: "deploy"
   shell: "hal deploy apply"
