@@ -4,9 +4,14 @@
     dest: /tmp/InstallHalyard.sh
     force: yes
 
+- name: add java8 ppa
+  apt_repository:
+    repo: "ppa:openjdk-r/ppa"
+
 
 - name: Check java8 package
   apt:
+    update_cache: true
     name: openjdk-8-jdk
     state: present
 
