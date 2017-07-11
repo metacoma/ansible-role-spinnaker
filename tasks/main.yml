@@ -40,5 +40,14 @@
   become: true
   become_user: "{{ spinnaker_user }}"
 
+- name: "Enable jenkins"
+  shell: "hal config ci jenkins enable"
+  when: spinnaker.jenkins == true
+
+- name: "Enable kubernetes"
+  shell: "hal config provider kubernetes enable"
+
 - name: "deploy"
   shell: "hal deploy apply"
+
+

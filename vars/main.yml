@@ -4,3 +4,5 @@ hal_installation_script_url: "https://raw.githubusercontent.com/spinnaker/halyar
 spinnaker_user: spinnaker
 spinnaker_version: "1.1.0"
 spinnaker_public_ip: '{{ ansible_default_ipv4["address"] }}'
+spinnaker:
+  jenkins: true
